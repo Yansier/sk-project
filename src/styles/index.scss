@@ -1,0 +1,238 @@
+//@import "base.scss";
+@use "iconfont.scss";
+
+/* -------------------- reset é‡ç½® -------------------- */
+/* scrollbar */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+/* input[type=number] */
+::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+body {
+  background-color: #f8f9fa;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+#app {
+  scroll-behavior: smooth;
+}
+ul, li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+a img {
+  border: 0;
+}
+a {
+  text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+option {
+  direction: ltr;
+}
+select option:disabled {
+  background: #ddd;
+  pointer-events: none;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* -------------------- content -------------------- */
+.content {
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+@media screen and (min-width: 1024px) {
+  .content, .goodsNav {
+    margin-right: auto;
+    margin-left: auto;
+    width: 670px !important;
+  }
+  .max-width {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 700px;
+  }
+}
+
+/* -------------------- function åŠŸèƒ½ -------------------- */
+/* position */
+.pos-r,
+.relative {
+  position: relative;
+}
+
+.pos-a,
+.absolute {
+  position: absolute;
+}
+
+/* visibility */
+.invisible {
+  visibility: hidden;
+}
+
+/* display */
+.dn,
+.hide,
+.hidden {
+  display: none !important;
+}
+.di,
+.inline {
+  display: inline;
+}
+.db,
+.block,
+.show {
+  display: block !important;
+}
+.dib,
+.inline-block {
+  display: inline-block;
+
+  *display: inline;
+  *zoom: 1;
+}
+
+/* float */
+.fl-l {
+  float: left;
+}
+.fl-r {
+  float: right;
+}
+/* clear */
+.clear {
+  *zoom: 1;
+}
+
+/* main-color */
+.main-color,
+.error-color {
+  color: #f76260;
+}
+.warn-color {
+  color: #ffbe00;
+}
+.success-color {
+  /*color: #09BB07;*/
+  color: #3cc51f !important;
+}
+.success-border-bottom {
+  border-bottom: 2px solid #3cc51f;
+}
+.green-font {
+  color: rgb(28, 184, 65) !important;
+}
+
+/* font-size */
+.f0 {
+  font-size: 0;
+}
+.f11 {
+  font-size: 11px;
+}
+.f10,
+.xs-font {
+  font-size: 10px;
+}
+.f12,
+.sm-font {
+  font-size: 12px;
+}
+.f14,
+.md-font {
+  font-size: 14px;
+}
+.f16 {
+  font-size: 16px;
+}
+.f17,
+.lg-font {
+  font-size: 17px;
+}
+.f18 {
+  font-size: 18px;
+}
+.f20 {
+  font-size: 20px;
+}
+.f24,
+.xl-font {
+  font-size: 24px;
+}
+.f28 {
+  font-size: 28px;
+}
+.f30 {
+  font-size: 30px;
+}
+
+/* ellipsis */
+.ellipsis-one {
+  display: block;
+  overflow: hidden;
+
+  white-space: nowrap;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+.ellipsis-two {
+  display: -webkit-box;
+  overflow: hidden;
+
+  -webkit-box-orient: vertical;
+
+  text-align: left;
+
+  -webkit-line-clamp: 2;
+}
+
+/* white-space */
+.nowrap {
+  white-space: nowrap;
+}
+/* word-wrap */
+.word-wrap {
+  word-wrap: break-word;
+}
+/* word-break */
+.word-break {
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-all;
+}
+/* border-box */
+.border-box {
+  box-sizing: border-box;
+}
+
+.zhengfangxing {
+  height: 0;
+  width: 100%;
+  padding-bottom: 100%;
+  position: relative;
+  &-child {
+    position: absolute;
+    inset: 0;
+  }
+}
+.padding-horizontal {
+  padding: 0 16px;
+}
+
+.el-drawer {
+  .el-drawer__body {
+    padding: 0;
+  }
+}
