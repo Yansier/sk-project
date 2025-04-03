@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="refresh" content="0; url=home.html" />
     <title>SilkRoad Store</title>
   </head>
   <body>
@@ -39,14 +40,15 @@
     <!-- End Meta Pixel Code -->
 
     <div id="app-portal"></div>
+    <p>Redirecting to <a href="home.html">home.html</a>...</p>
     <script type="module" src="/src/main-portal.js"></script>
     <script>
-      if (
-        (!window.location.hash || window.location.hash === '#/') &&
-        window.location.pathname !== '/home'
-      ) {
-        window.location.replace('/home')
-      }
+      // if (
+      //   (!window.location.hash || window.location.hash === '#/') &&
+      //   window.location.pathname !== '/home'
+      // ) {
+      //   window.location.replace('/home')
+      // }
     </script>
   </body>
 </html>
