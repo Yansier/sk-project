@@ -7,45 +7,34 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
 
     steps:
+      # 1. 检出代码（简化版）
       - uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.SK_PROJECT_SECRET }}
-          repository: Yansier/sk-project
-          ssh-key: ${{ secrets.SK_PROJECT_SECRET_2 }}
+
+      # 2. 安装 Node.js
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
+      # 3. 安装依赖
       - name: Install dependencies
-        run: npm install
+        run: npm ci  # 更干净的安装方式
 
-      - name: Build project
-        run: npm run build
+      # 4. 构建项目（单次）
       - name: Build
         run: npm run build
 
-      - name: Deploy to GitHub Pages   
+      # 5. 部署（只保留一种方式）
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-      - name: Deploy to GitHub Pages
-        run: |
-            # 假设构建产物在 dist 目录
-            cd dist
-            git init
-            git checkout -b gh-pages
-            git add .
-            git commit -m "Deploy"
-            git push -f https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages
-   
- 
-    permissions: # 关键！授予写入权限
-      contents: write
-      pages: write
-      id-token: write
-
-      
+          # 可选：强制清空历史
+          force_orphan: true
