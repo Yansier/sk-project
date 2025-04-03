@@ -28,7 +28,7 @@ jobs:
 
       # 4. 构建项目（单次）
       - name: Build
-        run: npm run build
+        run: npm run build || exit 1
 
       # 5. 部署（只保留一种方式）
       - name: Deploy to GitHub Pages
