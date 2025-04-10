@@ -1,39 +1,63 @@
-name: Build and Deploy
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main  # 或者您希望触发构建的其他分支
+    branches: [main]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest  # 在 Ubuntu 环境中运行构建作业
-
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    
     steps:
-    # 步骤 1：检出代码
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v3
+        
 
-    # 步骤 2：设置 Node.js 环境
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'  # 设置 Node.js 版本
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            .npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
-    # 步骤 3：安装依赖
-    - name: Install dependencies
-      run: npm ci  # 使用 npm ci 安装依赖（确保依赖和 lock 文件一致）
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-    # 步骤 4：手动运行 npm run build
-    - name: Run build
-      run: |
-        echo "Starting build..."
-        export NODE_OPTIONS="--max-old-space-size=4096"  # 提高 Node.js 的内存限制（根据需要调整）
-        npm run build || (echo "Build failed!" && exit 1)  # 运行 npm run build，失败时退出
-        echo "Build finished."
+      - name: Install dependencies
+        run: npm ci
 
-    # 步骤 5：查看构建输出
-    - name: Verify dist directory
-      run: |
-        echo "Checking dist directory..."
-        ls -R dist || (echo "Dist directory not found!" && exit 1)  # 检查 dist 目录是否生成
+      - name: Build
+        run: |
+          echo "Starting build..."
+          export NODE_OPTIONS="--max-old-space-size=4096"
+          npm run build || (echo "Build failed!" && exit 1)
+          echo "Build finished."
+          echo "Checking dist directory..."
+          ls -R dist || (echo "Dist directory not found!" && exit 1)
+      
+
+      - name: Verify build output
+        run: |
+          ls -R dist
+          [ -f dist/index.html ] || exit 1
+
+      - name: Verify dist directory before deploy
+        run: |
+            echo "Checking dist directory before deploy..."
+            ls -R dist || exit 1
+    
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          force_orphan: true
+          needs: build
+
+      
