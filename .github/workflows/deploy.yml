@@ -9,11 +9,19 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pages: write  # 必须添加
-      id-token: write  # 必须添加
+      pages: write
+      id-token: write
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            .npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install Node.js
         uses: actions/setup-node@v3
@@ -30,8 +38,8 @@ jobs:
 
       - name: Verify build output
         run: |
-          ls -R dist  # 列出 dist 内容
-          [ -f dist/index.html ] || exit 1  # 确保 index.html 存在
+          ls -R dist
+          [ -f dist/index.html ] || exit 1
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -39,4 +47,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           force_orphan: true
-          keep_files: false
