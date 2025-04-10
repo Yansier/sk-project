@@ -8,7 +8,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --fix",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "predeploy":"npm run build",
+    "deploy":"gh-pages -d build"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
