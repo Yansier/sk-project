@@ -38,11 +38,19 @@ jobs:
           export NODE_OPTIONS="--max-old-space-size=4096"
           npm run build || exit 1
           echo "Build finished."
+          echo "Checking dist directory..."
+          ls -R dist || exit 1
+      
 
       - name: Verify build output
         run: |
           ls -R dist
           [ -f dist/index.html ] || exit 1
+
+      - name: Verify dist directory before deploy
+        run: |
+            echo "Checking dist directory before deploy..."
+            ls -R dist || exit 1
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
