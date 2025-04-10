@@ -1,1 +1,0 @@
-import{s as r}from"./request-C0k_ht0T.js";function u(){return r({url:"/app/product/category/tree"})}function p(t){return r({url:"/app/product/item/list",params:t})}function o(t){return r({url:`/app/product/item/${t}`})}function a(){return r({url:"/app/product/item/index"})}export{o as a,u as c,a as h,p};
